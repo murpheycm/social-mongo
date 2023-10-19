@@ -8,7 +8,7 @@ const userController = {
         try {
             const users = await User.find()
                 .populate({ path: "thoughts" })
-                .populate({ path: "friends"});
+                .populate({ path: "friends" });
             
             return res.status(200).json(users); 
         } catch (err) {
@@ -48,10 +48,38 @@ const userController = {
     },
 
 // UPDATE user
+    async updateUser(req, res) {
+        try {
+        
 
+        if (!user) {
+            return res.status(404).json({ message: "Please check the user ID you have provided" });
+        }
 
+        return res.status(200).json(user);
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
+    },
 
 // DELETE user
+    async deleteUser(req, res) {
+        try {
+
+        if (!user) {
+            return res.status(404).json({ message: "Please check the user ID" });
+        }
+
+        return res.status(200).json();
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
+    },
+
+
+
 
 };
 
