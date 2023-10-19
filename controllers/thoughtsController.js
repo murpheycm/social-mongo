@@ -93,11 +93,46 @@ const thoughtsController = {
 
 // =================Reactions================//
 // Add reaction
+    async addReaction(req, res) {
+        try {
+            const reaction = await Thoughts.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $addToSet: { reactions: req.body } },
+                { runValidators: true }
+            );
 
+            if (!reaction) {
+                return res.status(404).json({ message: "Please check the ID you provided" });
+            }
+
+            return res.status(200).json(reaction);
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
+    },
 
 // Remove reaction
+    async deleteReaction(req, res) {
+        try {
+            const reaction = await Thoughts.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $pull: { reactions: { _id: req.params.reactionId } } },
+                { runValidators: true, new: true }
+            );
 
+            if (!reaction) {
+                return res
+                .status(404)
+                .json({ message: "Please check the ID you provided" });
+            }
 
+            return res.status(200).json(reaction);
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
+    },
 };
 
 // Exports
