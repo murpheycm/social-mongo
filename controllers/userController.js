@@ -24,15 +24,15 @@ const userController = {
             .populate({ path: "thoughts" })
             .populate({ path: "friends" });
 
-        if (!user) {
-            console.log(err);
-            return res.status(404).json({ message: "Please check user ID" });
-        }
+            if (!user) {
+                console.log(err);
+                return res.status(404).json({ message: "Please check user ID" });
+            }
 
-        return res.status(200).json(user);
+            return res.status(200).json(user);
         } catch (err) {
-        console.log(err);
-        return res.status(500).json(err);
+            console.log(err);
+            return res.status(500).json(err);
         }
     },
 
@@ -50,13 +50,24 @@ const userController = {
 // UPDATE user
     async updateUser(req, res) {
         try {
-        
+            const user = await User.findOneAndUpdate(
+                { 
+                    _id: req.params.userId
+                },
+                { 
+                    $set: req.body
+                },
+                { 
+                    new: true,
+                    runValidators: true
+                }
+            );
 
-        if (!user) {
-            return res.status(404).json({ message: "Please check the user ID you have provided" });
-        }
+            if (!user) {
+                return res.status(404).json({ message: "Please check the user ID you have provided" });
+            }
 
-        return res.status(200).json(user);
+            return res.status(200).json(user);
         } catch (err) {
             console.log(err);
             return res.status(500).json(err);
@@ -66,22 +77,20 @@ const userController = {
 // DELETE user
     async deleteUser(req, res) {
         try {
+            const user = await User.findOneAndDelete({ _id: req.params.userId });
+            
+            if (!user) {
+                return res.status(404).json({ message: "Please check the user ID" });
+            }
 
-        if (!user) {
-            return res.status(404).json({ message: "Please check the user ID" });
-        }
-
-        return res.status(200).json();
+            await Thoughts.deleteMany({ _id: { $in: user.thoughts } });
+            return res.status(200).json({message: "Deleted user!"});
         } catch (err) {
             console.log(err);
             return res.status(500).json(err);
         }
     },
-
-
-
-
 };
 
-// Export
+// Export userController
 module.exports = userController;
