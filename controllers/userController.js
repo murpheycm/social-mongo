@@ -18,7 +18,23 @@ const userController = {
     },
 
 // GET individual user
+    async getUser(req, res) {
+        try {
+        const user = await User.findOne({ _id: req.params.userId })
+            .populate({ path: "thoughts" })
+            .populate({ path: "friends" });
 
+        if (!user) {
+            console.log(err);
+            return res.status(404).json({ message: "Please check user ID" });
+        }
+
+        return res.status(200).json(user);
+        } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+        }
+    },
 
 
 // CREATE user
