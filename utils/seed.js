@@ -18,9 +18,9 @@ const users = [
 
 // Connects to server
 connection.once("open", async () => {
-  console.log("You are now connected!");
+  console.log("Connected to server!");
 
-  // Drop existing users
+  // Drops existing users
   await User.deleteMany({});
 
   // Adds seed data to database

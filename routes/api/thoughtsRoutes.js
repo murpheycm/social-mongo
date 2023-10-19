@@ -1,4 +1,4 @@
-// Imports
+// Imports router
 const router = require('express').Router();
 
 // thoughtsController.js function imports
@@ -29,5 +29,5 @@ router.route("/:thoughtId/reactions").post(addReaction);
 router.route("/:thoughtId/reactions/:reactionId").delete(deleteReaction);
 
 
-// Exports
+// Exports routers
 module.exports = router;
