@@ -1,6 +1,5 @@
-const Username = require('./username');
-const Email = require('./email');
-const Thoughts = require('./thoughts');
-const Friends = require('./friends');
+const User = require('./User');
+const Thought = require('./Thoughts');
 
-module.exports = { Username, Email, Thoughts, Friends };
+
+module.exports = { User,Thought };
