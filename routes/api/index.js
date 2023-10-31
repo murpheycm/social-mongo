@@ -4,7 +4,7 @@ const userRoutes = require('./userRoutes');
 const thoughtsRoutes = require('./thoughtsRoutes');
 
 // Middleware
-router.use('/username', userRoutes);
+router.use('/users', userRoutes);
 router.use('/thoughts', thoughtsRoutes);
 
 // Exports routers

@@ -16,14 +16,13 @@ const {
 router.route("/").get(getUsers).post(createUser);
 
 // ROUTE: localhost:3001/api/users/:id
-router
-  .route("/:id")
-  .get(getUser)
-  .put(updateUser)
-  .delete(deleteUser);
+router.route("/:id").get(getUser);
+router.route("/:id").put(updateUser);
+router.route("/:id").delete(deleteUser);
 
 // ROUTE: localhost:3001/api/users/:id/friends/:friendId
-router.route("/:id/friends/:friendId").post(addFriend).delete(deleteFriend);
+// router.route("/:id/friends/:friendId").post(addFriend);
+// router.route("/:id/friends/:friendId").delete(deleteFriend);
 
 // Exports routers
-modeule.exports = router;
+module.exports = router;
